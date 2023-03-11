@@ -1,11 +1,16 @@
 const app = require('./app');
 const mongoose = require('mongoose');
+const cors = require('cors');
+
 const searchPageQuery = require('./scraper');
 const dotenv = require('dotenv');
 
 const routes = require('./routes');
 
 dotenv.config();
+
+app.use(cors());
+app.options('*', cors());
 
 const PORT = process.env.PORT; 
 
