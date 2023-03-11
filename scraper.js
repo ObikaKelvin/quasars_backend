@@ -9,8 +9,7 @@ const parseTexts = require('./parseText');
   //todo
     //make SQTF appear in front end, remove it from here
 
-const puppeteer = require('puppeteer-core');
-const {executablePath} = require('puppeteer')
+const puppeteer = require('puppeteer');
 
 let gatheredLinks = [];
 
@@ -161,9 +160,7 @@ const searchPageQuery = async (input) => {
 const searchFromQuery = async (query, n) => {
 
   try {
-    const browser = await puppeteer.launch({
-    executablePath: executablePath(),
-  });
+    const browser = await puppeteer.launch();
   const page = await browser.newPage();
 
   gatheredLinks = [];
@@ -238,14 +235,7 @@ const getDataFromMarketPosts = async (arrayOfLinks, n) => {
 const dataScrapp = async (link, n) => {
 
   try {
-    const browser = await puppeteer.launch({
-    args: ['--no-sandbox',],
-    headless: false,
-    ignoreHTTPSErrors: true,
-
-    // add this
-    executablePath: executablePath(),
-  });
+    const browser = await puppeteer.launch();
   const page = await browser.newPage();
 
   let marketPost = {
