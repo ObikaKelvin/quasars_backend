@@ -112,40 +112,44 @@ const websites = [
 
 const searchPageQuery = async (input) => {
 
-  let websitesResults = []
+  try {
+    let websitesResults = []
 
-  let n = -1;
+    let n = -1;
 
-  let searchPosts = [];
+    let searchPosts = [];
 
-  await Promise.all(websites.map(async (webSource) => {
-    n++;
-    if (webSource.active) {
-      console.log('Scrapping data from, ', webSource.query)
+    await Promise.all(websites.map(async (webSource) => {
+        n++;
+        if (webSource.active) {
+        console.log('Scrapping data from, ', webSource.query)
 
-      let parsedQuery = webSource.inputParse(input)
-      gatheredLinks = [];
+        let parsedQuery = webSource.inputParse(input)
+        gatheredLinks = [];
 
-      let currentLoopResults = await searchFromQuery(parsedQuery, n)
+        let currentLoopResults = await searchFromQuery(parsedQuery, n)
 
-      currentLoopResults.forEach(post => {
-        if(post.price!=undefined){searchPosts.push(post)}
-      })
-    }
+        currentLoopResults.forEach(post => {
+            if(post.price!=undefined){searchPosts.push(post)}
+        })
+        }
 
-    
+        
 
-  }))
+    }))
 
-  searchPosts.forEach(post => {
-    websitesResults.push(post)
-  })
+    searchPosts.forEach(post => {
+        websitesResults.push(post)
+    })
 
-  console.log('______________________websitesResults______________________ ');
-  console.log(websitesResults.length, ' Market posts found!');
-  console.log(websitesResults);
+    console.log('______________________websitesResults______________________ ');
+    console.log(websitesResults.length, ' Market posts found!');
+    console.log(websitesResults);
 
-  return websitesResults
+    return websitesResults
+  } catch (error) {
+    console.log(error)
+  }
 
 }
 
@@ -155,7 +159,8 @@ const searchPageQuery = async (input) => {
 
 const searchFromQuery = async (query, n) => {
 
-  const browser = await puppeteer.launch();
+  try {
+    const browser = await puppeteer.launch();
   const page = await browser.newPage();
 
   gatheredLinks = [];
@@ -196,11 +201,15 @@ const searchFromQuery = async (query, n) => {
   const dataFromMarketPosts = await getDataFromMarketPosts(gatheredLinks, n);
 
   return dataFromMarketPosts
+  } catch (error) {
+    console.log(error)
+  }
 }
 
 const getDataFromMarketPosts = async (arrayOfLinks, n) => {
 
-  let marketPosts = [];
+  try {
+    let marketPosts = [];
   let post = {};
 
   console.log('let the Scrapping Begin!')
@@ -216,13 +225,17 @@ const getDataFromMarketPosts = async (arrayOfLinks, n) => {
   marketPosts = [];
 
   return finalResults
+  } catch (error) {
+    console.log(error)
+  }
 
 };
 
 //scrap posts
 const dataScrapp = async (link, n) => {
 
-  const browser = await puppeteer.launch();
+  try {
+    const browser = await puppeteer.launch();
   const page = await browser.newPage();
 
   let marketPost = {
@@ -328,6 +341,9 @@ const dataScrapp = async (link, n) => {
   await browser.close();
 
   return marketPost;
+  } catch (error) {
+    console.log(error)
+  }
 };
 
 
