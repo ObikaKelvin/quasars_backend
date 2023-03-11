@@ -5,9 +5,9 @@ const dotenv = require('dotenv');
 
 const routes = require('./routes');
 
-dotenv.config({ path: './config.env' });
+dotenv.config();
 
-const PORT = 5000; 
+const PORT = process.env.PORT; 
 
 app.listen(PORT, () => { 
     console.log(`server started on port ${PORT}`);
@@ -17,6 +17,8 @@ app.listen(PORT, () => {
           '<password>',
           process.env.DB_PASSWORD
         );
+
+        console.log(DB)
         
         mongoose.set('strictQuery', true)
         mongoose.connect(
